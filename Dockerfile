@@ -1,14 +1,14 @@
-FROM node:18-alpine as build
+FROM --platform=linux/arm64/v8 node:18-alpine as build
 WORKDIR /app
 RUN apk add --no-cache openssh git
 COPY package* ./
 RUN npm install --omit=dev
 COPY dist ./
 
-FROM golang:latest as go
+FROM --platform=linux/arm64/v8 golang:latest as go
 RUN go install -v github.com/oauth2-proxy/oauth2-proxy/v7@latest
 
-FROM node:18-alpine
+FROM --platform=linux/arm64/v8 node:18-alpine
 # https://stackoverflow.com/questions/66963068/docker-alpine-executable-binary-not-found-even-if-in-path
 RUN apk add --no-cache libc6-compat curl
 ARG BUILD_VERSION
