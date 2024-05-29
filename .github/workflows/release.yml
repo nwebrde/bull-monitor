@@ -39,6 +39,8 @@ jobs:
 
       - run: npm run ci:build
 
+      - run: docker image tag docker.io/library/bull-monitor:latest ghcr.io/nwebrde/bull-monitor:latest
+
       - run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-          docker push bull-monitor
+          docker push ghcr.io/nwebrde/bull-monitor:latest
